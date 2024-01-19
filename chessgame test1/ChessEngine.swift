@@ -24,19 +24,27 @@ struct ChessEngine {
     }
     
     mutating func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
+        //
+        
+        if !canMovePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
+            return
+        }
+        
         guard let movingPiece = pieceAt(col: fromCol, row: fromRow) else {
             return
         }
+        
         
         if let target = pieceAt(col: toCol, row: toRow) {
             pieces.remove(target)
         }
         // check if move is valid canMovePiece
+        
         pieces.remove(movingPiece)
         pieces.insert(ChessPiece(col: toCol, row: toRow, imageName: movingPiece.imageName, isWhite: movingPiece.isWhite, rank: movingPiece.rank))
         
         whitesTurn = !whitesTurn
-        print("seems good")
+        
     }
     
     func canMovePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) -> Bool {
@@ -54,6 +62,9 @@ struct ChessEngine {
         
         //checking same color
         if let target = pieceAt(col: toCol, row: toRow), target.isWhite == movingPiece.isWhite {
+            return false
+        }
+        if movingPiece.isWhite != whitesTurn{
             return false
         }
         
