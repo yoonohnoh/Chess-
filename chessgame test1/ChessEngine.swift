@@ -25,15 +25,17 @@ struct ChessEngine {
     
     mutating func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
         //
-        
-        if !canMovePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
-            return
-        }
-        
         guard let movingPiece = pieceAt(col: fromCol, row: fromRow) else {
             return
         }
         
+        if movingPiece.isWhite != whitesTurn{
+            return
+        }
+        
+        if !canMovePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
+            return
+        }
         
         if let target = pieceAt(col: toCol, row: toRow) {
             pieces.remove(target)
@@ -62,9 +64,6 @@ struct ChessEngine {
         
         //checking same color
         if let target = pieceAt(col: toCol, row: toRow), target.isWhite == movingPiece.isWhite {
-            return false
-        }
-        if movingPiece.isWhite != whitesTurn{
             return false
         }
         
@@ -248,6 +247,7 @@ struct ChessEngine {
     }
 }
 //
+
 ////DataBase
 //let db = try Connection(dbPath)
 //let moves = Table("moves")
