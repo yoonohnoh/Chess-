@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		98405FA42AE8BB95008A8BFA /* ChessDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98405FA32AE8BB95008A8BFA /* ChessDelegate.swift */; };
 		98405FB42B0062E7008A8BFA /* ChessRank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98405FB32B0062E7008A8BFA /* ChessRank.swift */; };
+		985856772B5F74E500D84995 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985856762B5F74E500D84995 /* DatabaseManager.swift */; };
 		985F2C712AD7C1DA006899C7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985F2C702AD7C1DA006899C7 /* AppDelegate.swift */; };
 		985F2C732AD7C1DA006899C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985F2C722AD7C1DA006899C7 /* SceneDelegate.swift */; };
 		985F2C752AD7C1DA006899C7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985F2C742AD7C1DA006899C7 /* ViewController.swift */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		98405FA32AE8BB95008A8BFA /* ChessDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessDelegate.swift; sourceTree = "<group>"; };
 		98405FB32B0062E7008A8BFA /* ChessRank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessRank.swift; sourceTree = "<group>"; };
+		985856762B5F74E500D84995 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		985F2C6D2AD7C1DA006899C7 /* chessgame test1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "chessgame test1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		985F2C702AD7C1DA006899C7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		985F2C722AD7C1DA006899C7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 		985F2C6F2AD7C1DA006899C7 /* chessgame test1 */ = {
 			isa = PBXGroup;
 			children = (
+				985856762B5F74E500D84995 /* DatabaseManager.swift */,
 				985F2C702AD7C1DA006899C7 /* AppDelegate.swift */,
 				985F2C722AD7C1DA006899C7 /* SceneDelegate.swift */,
 				98405FA32AE8BB95008A8BFA /* ChessDelegate.swift */,
@@ -289,6 +292,7 @@
 				985F2C712AD7C1DA006899C7 /* AppDelegate.swift in Sources */,
 				985F2CA52ADBCBAF006899C7 /* ChessPiece.swift in Sources */,
 				985F2C732AD7C1DA006899C7 /* SceneDelegate.swift in Sources */,
+				985856772B5F74E500D84995 /* DatabaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

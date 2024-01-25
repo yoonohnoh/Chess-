@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SQLite
 
 struct ChessEngine {
     
@@ -22,6 +21,7 @@ struct ChessEngine {
             }
             return nil
     }
+
     
     mutating func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
         //
@@ -249,6 +249,12 @@ struct ChessEngine {
 
 //Database from here
 
+
+
+
+
+
+
 // Assuming you have a connection to your SQLite database named 'db'
 
 //
@@ -281,3 +287,12 @@ struct ChessEngine {
 //    // Handle the case where the table is empty
 //    print("No records in the 'moves' table.")
 //}
+//var db: Connection?
+//let movesTable = Table("moves")
+//let id = Expression<Int64>("id")
+//let fromCol = Expression<Int8>("fromCol")
+//let fromRow = Expression<Int8>("fromRow")
+//let toCol = Expression<Int8>("toCol")
+//let toRow = Expression<Int8>("toRow")
+
+

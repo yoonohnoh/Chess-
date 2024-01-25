@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ChessDelegate {
-    func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int)
-    func pieceAt(col: Int, row: Int) -> ChessPiece?
+    func movePiece(fromCol: Int8, fromRow: Int8, toCol: Int8, toRow: Int8)
+    func pieceAt(col: Int8, row: Int8) -> ChessPiece?
     
 }

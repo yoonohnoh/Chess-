@@ -33,11 +33,11 @@ class ViewController: UIViewController{
 
 //Importing updatedmoves from other files
 extension ViewController: ChessDelegate {
-    func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
+    func movePiece(fromCol: Int8, fromRow: Int8, toCol: Int8, toRow: Int8) {
         updateMove(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
     }
-    func updateMove(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int){
-        chessEngine.movePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
+    func updateMove(fromCol: Int8, fromRow: Int8, toCol: Int8, toRow: Int8){
+        chessEngine.movePiece(fromCol: Int(fromCol), fromRow: Int(fromRow), toCol: Int(toCol), toRow: Int(toRow))
         boardView.shadowPieces = chessEngine.pieces
         boardView.setNeedsDisplay()
         
@@ -49,7 +49,7 @@ extension ViewController: ChessDelegate {
         }
     }
     
-    func pieceAt(col: Int, row: Int) -> ChessPiece? {
-        return chessEngine.pieceAt(col: col, row: row)
+    func pieceAt(col: Int8, row: Int8) -> ChessPiece? {
+        return chessEngine.pieceAt(col: Int(col), row: Int(row))
     }
 }
