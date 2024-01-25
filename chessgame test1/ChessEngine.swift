@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SQLite
+import SQLite3
 
 struct ChessEngine {
     
@@ -246,38 +246,43 @@ struct ChessEngine {
         
     }
 }
-
-//Database from here
-
-// Assuming you have a connection to your SQLite database named 'db'
-
 //
-//let dbPath = Bundle.main.path(forResource: "SQLite.swift", ofType: "sqlite3")
+
+////DataBase
+//let db = try Connection(dbPath)
 //let moves = Table("moves")
 //
-//// Define columns
-//let id = Expression<Int64>("id")
-//let fromCol = Expression<Int8>("fromCol")
-//let fromRow = Expression<Int8>("fromRow")
-//let toCol = Expression<Int8>("toCol")
-//let toRow = Expression<Int8>("toRow")
+//try db.run(moves.create(ifNotExists: true) { table in
+//    table.column(Expression<Int>("id"), primaryKey: .autoincrement)
+//    table.column(Expression<String>("move"))
+//    // Add other columns as needed
+//})
+//let move = "e2e4" // Replace this with the actual move data
+//try db.run(moves.insert(Expression<String>("move") <- move))
 //
-//// Retrieve the last record based on the 'id' in descending order
-//if let lastMove = try? db.pluck(moves.order(id.desc)) {
-//    // Access the values from the last record
-//    let lastFromCol = lastMove[fromCol]
-//    let lastFromRow = lastMove[fromRow]
-//    let lastToCol = lastMove[toCol]
-//    let lastToRow = lastMove[toRow]
-//
-//    // Do something with the values
-//    print("Last move: fromCol=\(lastFromCol), fromRow=\(lastFromRow), toCol=\(lastToCol), toRow=\(lastToRow)")
-//
-//    // Delete the last record
-//    let lastID = lastMove[id]
-//    let rowToDelete = moves.filter(id == lastID)
-//    try? db.run(rowToDelete.delete())
-//} else {
-//    // Handle the case where the table is empty
-//    print("No records in the 'moves' table.")
-//}
+//try db.run(moves.create(ifNotExists: true) { table in
+//    table.column(moveID, primaryKey: .autoincrement)
+//    table.column(fromCol)
+//    table.column(fromRow)
+//    table.column(toCol)
+//    table.column(toRow)
+//    table.column(timestamp)
+//    // Add other columns as needed
+//})
+//let moveData = (fromCol: 1, fromRow: 2, toCol: 3, toRow: 4, timestamp: Date().timeIntervalSince1970)
+//try db.run(moves.insert(
+//    fromCol <- moveData.fromCol,
+//    fromRow <- moveData.fromRow,
+//    toCol <- moveData.toCol,
+//    toRow <- moveData.toRow,
+//    timestamp <- moveData.timestamp
+//))
+//let db = try Connection("/path/to/your/database.sqlite3")
+
+    
+    
+    
+    
+    
+    
+    
