@@ -22,6 +22,7 @@
 		985F2CA52ADBCBAF006899C7 /* ChessPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985F2CA42ADBCBAF006899C7 /* ChessPiece.swift */; };
 		985F2CA72ADBCD18006899C7 /* ChessEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985F2CA62ADBCD18006899C7 /* ChessEngine.swift */; };
 		98AB90352B563122009D6CE1 /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 98AB90342B563122009D6CE1 /* SQLite */; };
+		98C9BFD02B7BE5E4000A3589 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98C9BFCE2B7BE5E4000A3589 /* DataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		985F2CA02AD7C23D006899C7 /* BoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
 		985F2CA42ADBCBAF006899C7 /* ChessPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessPiece.swift; sourceTree = "<group>"; };
 		985F2CA62ADBCD18006899C7 /* ChessEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChessEngine.swift; sourceTree = "<group>"; };
+		98C9BFCF2B7BE5E4000A3589 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 				985F2C792AD7C1DC006899C7 /* Assets.xcassets */,
 				985F2C7B2AD7C1DC006899C7 /* LaunchScreen.storyboard */,
 				985F2C7E2AD7C1DC006899C7 /* Info.plist */,
+				98C9BFCE2B7BE5E4000A3589 /* DataModel.xcdatamodeld */,
 			);
 			path = "chessgame test1";
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				985F2CA12AD7C23D006899C7 /* BoardView.swift in Sources */,
 				98405FB42B0062E7008A8BFA /* ChessRank.swift in Sources */,
 				985F2C712AD7C1DA006899C7 /* AppDelegate.swift in Sources */,
+				98C9BFD02B7BE5E4000A3589 /* DataModel.xcdatamodeld in Sources */,
 				985F2CA52ADBCBAF006899C7 /* ChessPiece.swift in Sources */,
 				985F2C732AD7C1DA006899C7 /* SceneDelegate.swift in Sources */,
 			);
@@ -643,6 +647,19 @@
 			productName = SQLite;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		98C9BFCE2B7BE5E4000A3589 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				98C9BFCF2B7BE5E4000A3589 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 98C9BFCF2B7BE5E4000A3589 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 985F2C652AD7C1DA006899C7 /* Project object */;
 }

@@ -6,13 +6,15 @@
 //
 
 import Foundation
-import SQLite3
+import UIKit
+import CoreData
 
 struct ChessEngine {
     
     var pieces: Set<ChessPiece> = Set<ChessPiece>()
     var whitesTurn: Bool = true
-    
+
+        
     //pieceAt function
     func pieceAt(col: Int, row: Int) -> ChessPiece? {
             for piece in pieces {
@@ -24,31 +26,128 @@ struct ChessEngine {
     }
     
     mutating func movePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
-        //
-        guard let movingPiece = pieceAt(col: fromCol, row: fromRow) else {
-            return
+            print("movePiece working")
+            guard let movingPiece = pieceAt(col: fromCol, row: fromRow) else {
+                return
+            }
+
+            if movingPiece.isWhite != whitesTurn {
+                print("piece is wrong color")
+                return
+            }
+
+            if !canMovePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
+                print("invalid move")
+                return
+            }
+        
+// use the target to record the piecetaken
+        
+            if let target = pieceAt(col: toCol, row: toRow) {
+                print("target is runinng")
+                // remove the target and save the imagename of the target then later use it to display the taken out pieces on the side
+                let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                let chessMove = ChessMove(context: context)
+                
+                //target's imagename and color
+                chessMove.pieceName = String(target.imageName)
+                chessMove.white = Bool(target.isWhite)
+                
+                pieces.remove(target)
+            }
+
+            pieces.remove(movingPiece)
+            pieces.insert(ChessPiece(col: toCol, row: toRow, imageName: movingPiece.imageName, isWhite: movingPiece.isWhite, rank: movingPiece.rank))
+
+            whitesTurn = !whitesTurn
+            saveMoveToCoreData(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow)
+        
+            
         }
-        
-        if movingPiece.isWhite != whitesTurn{
-            return
+
+    //function for making changes in the context of the coredata
+    mutating func saveMoveToCoreData(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) {
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+            let chessMove = ChessMove(context: context)
+            chessMove.fromCol = Int16(fromCol)
+            chessMove.fromRow = Int16(fromRow)
+            chessMove.toCol = Int16(toCol)
+            chessMove.toRow = Int16(toRow)
+            chessMove.timestamp = Date()
+    
+        do {
+            try context.save()
+            print("Move saved to CoreData")
+        } catch {
+            print("Error saving move to CoreData: \(error)")
         }
-        
-        if !canMovePiece(fromCol: fromCol, fromRow: fromRow, toCol: toCol, toRow: toRow) {
-            return
-        }
-        
-        if let target = pieceAt(col: toCol, row: toRow) {
-            pieces.remove(target)
-        }
-        // check if move is valid canMovePiece
-        
-        pieces.remove(movingPiece)
-        pieces.insert(ChessPiece(col: toCol, row: toRow, imageName: movingPiece.imageName, isWhite: movingPiece.isWhite, rank: movingPiece.rank))
-        
-        whitesTurn = !whitesTurn
-        
+        fetchinglatestdata()
+    
     }
     
+   //receiving the latest data
+    func fetchinglatestdata() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        do {
+            let fetchRequest: NSFetchRequest<ChessMove> = ChessMove.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
+            fetchRequest.fetchLimit = 1
+            
+            let moves = try context.fetch(fetchRequest)
+            
+            // Assuming ChessMove has a description property, replace it with the actual property you want to print
+            if let latestMove = moves.first {
+                print("Latest Move: From (\(latestMove.fromCol), \(latestMove.fromRow)) to (\(latestMove.toCol), \(latestMove.toRow))")
+            } else {
+                print("No moves available.")
+            }
+        } catch {
+            print("Error fetching data from CoreData: \(error)")
+        }
+    }
+    
+    // undoing the last move
+    mutating func undoMove() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+        do {
+            //retrieve the latest data set
+            let fetchRequest: NSFetchRequest<ChessMove> = ChessMove.fetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
+            fetchRequest.fetchLimit = 1
+
+            let moves = try context.fetch(fetchRequest)
+            print("moves", moves.first)
+
+            if let lastMove = moves.first {
+                // Undo the move
+                guard let movingPiece = pieceAt(col: Int(lastMove.toCol), row: Int(lastMove.toRow)) else{
+                    print("Failed to find piece")
+                    return
+                }
+                print("movingpiece", movingPiece.isWhite, movingPiece.imageName)
+                pieces.remove(movingPiece)
+                pieces.insert(ChessPiece(col: Int(lastMove.fromCol), row: Int(lastMove.fromRow), imageName: movingPiece.imageName, isWhite: movingPiece.isWhite, rank: movingPiece.rank))
+                
+                whitesTurn = !whitesTurn
+
+                // Remove the undone move from CoreData
+                context.delete(lastMove)
+
+                try context.save()
+                
+                // Refresh UI
+            } else {
+                print("No moves to undo.")
+            }
+        } catch {
+            print("Error fetching or undoing move from CoreData: \(error)")
+        }
+    }
+    
+
+
     func canMovePiece(fromCol: Int, fromRow: Int, toCol: Int, toRow: Int) -> Bool {
         //checking a piece is inside the boaard
         if toCol<0 || toCol>7 || toRow<0 || toRow>7 {
@@ -219,6 +318,7 @@ struct ChessEngine {
      }
     
     mutating func initializeGame() {
+        
         whitesTurn = true
         pieces.removeAll()
         
@@ -246,43 +346,3 @@ struct ChessEngine {
         
     }
 }
-//
-
-////DataBase
-//let db = try Connection(dbPath)
-//let moves = Table("moves")
-//
-//try db.run(moves.create(ifNotExists: true) { table in
-//    table.column(Expression<Int>("id"), primaryKey: .autoincrement)
-//    table.column(Expression<String>("move"))
-//    // Add other columns as needed
-//})
-//let move = "e2e4" // Replace this with the actual move data
-//try db.run(moves.insert(Expression<String>("move") <- move))
-//
-//try db.run(moves.create(ifNotExists: true) { table in
-//    table.column(moveID, primaryKey: .autoincrement)
-//    table.column(fromCol)
-//    table.column(fromRow)
-//    table.column(toCol)
-//    table.column(toRow)
-//    table.column(timestamp)
-//    // Add other columns as needed
-//})
-//let moveData = (fromCol: 1, fromRow: 2, toCol: 3, toRow: 4, timestamp: Date().timeIntervalSince1970)
-//try db.run(moves.insert(
-//    fromCol <- moveData.fromCol,
-//    fromRow <- moveData.fromRow,
-//    toCol <- moveData.toCol,
-//    toRow <- moveData.toRow,
-//    timestamp <- moveData.timestamp
-//))
-//let db = try Connection("/path/to/your/database.sqlite3")
-
-    
-    
-    
-    
-    
-    
-    
